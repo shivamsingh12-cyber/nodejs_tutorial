@@ -1,5 +1,5 @@
 import express from "express";
-import mongoose from "mongoose";
+import Person from "./models/schme.js";
 
 const app=express();
 
@@ -8,25 +8,20 @@ app.get("/",(req,res)=>{
     res.send("you got it! man");
 })
 
-const mongoUrl="mongodb://localhost:27017/hotels";
-
-mongoose.connect(mongoUrl).then(()=>console.log('You are connected to database!')).catch((err)=>{console.log(err)});
-
-const personSchema=new mongoose.Schema({
-    name:String,
-    city:String,
-    age:Number
-})
-const Person = mongoose.model("Person", personSchema);
 
 
-app.post("/save",(req,res)=>{
-    const data=req.body;
+
+app.post("/save",async (req,res)=>{
+    try {
+            const data=req.body;
     const newPerson=new Person(data);
-    newPerson.save();
-       res.status(201).json({
-            success: "your request saved!"
-        });
+   const getPerson=await newPerson.save();
+       res.status(201).json(getPerson);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({error:"Internal server Error"});
+    }
+
 })
 
 
