@@ -25,7 +25,19 @@ app.post("/save",async (req,res)=>{
 })
 
 
+app.get("/getme",async (req,res)=>{
+    try {
+            const data=await  Person.find({name:{$in:["Varad","Shivam"]}});
+       res.status(201).json(data);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({error:"Internal server Error"});
+    }
+
+})
+
+
 app.listen(3000,()=>{
-    console.log('Your server is running');
+    console.log('Your server is running on 3000');
 })
 
