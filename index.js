@@ -1,5 +1,7 @@
 import express from "express";
 import Person from "./models/schme.js";
+import Menu from "./models/menuSchema.js";
+
 
 const app=express();
 
@@ -21,7 +23,18 @@ app.post("/save",async (req,res)=>{
         console.log(error);
         res.status(500).send({error:"Internal server Error"});
     }
+})
 
+app.post("/savemenu",async (req,res)=>{
+    try {
+            const data=req.body;
+    const newMenu=new Menu(data);
+   const getMenu=await newMenu.save();
+       res.status(201).json(getMenu);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({error:"Internal server Error"});
+    }
 })
 
 

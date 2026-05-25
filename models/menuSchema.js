@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const menu=new mongoose.Schema({
+const menuschema=new mongoose.Schema({
     name:{
         type:String,
         require:true
@@ -15,3 +15,5 @@ const menu=new mongoose.Schema({
         require:true,
     }
 })
+const Menu = mongoose.model("Menu", menuschema);
+export default Menu;
