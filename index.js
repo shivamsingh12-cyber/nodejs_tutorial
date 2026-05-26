@@ -48,6 +48,21 @@ app.get("/getme",async (req,res)=>{
     }
 
 })
+app.get("/person/:worktype",async (req,res)=>{
+    try {
+            const worktype=req.params.worktype;
+            if (worktype=="manager"|| worktype=="owner" || worktype=="chef") {
+                const getperson=await Person.find({work:worktype});
+                res.status(200).send(getperson);
+            }else{
+                res.status(404).json("Not found");
+            }
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({error:"Internal server Error"});
+    }
+
+})
 
 
 app.listen(3000,()=>{

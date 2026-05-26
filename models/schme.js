@@ -6,7 +6,8 @@ mongoose.connect(mongoUrl).then(()=>console.log('You are connected to database!'
 const personSchema=new mongoose.Schema({
     name:String,
     city:String,
-    age:Number
+    age:Number,
+    work:String
 })
 const Person = mongoose.model("Person", personSchema);
 export default Person;
