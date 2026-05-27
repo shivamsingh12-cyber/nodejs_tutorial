@@ -1,0 +1,44 @@
+import express from "express";
+import Person from "../models/schme";
+const router=express.Router();
+
+app.get("/person/:worktype",async (req,res)=>{
+    try {
+            const worktype=req.params.worktype;
+            if (worktype=="manager"|| worktype=="owner" || worktype=="chef") {
+                const getperson=await Person.find({work:worktype});
+                res.status(200).send(getperson);
+            }else{
+                res.status(404).json("Not found");
+            }
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({error:"Internal server Error"});
+    }
+
+})
+
+app.get("/getme",async (req,res)=>{
+    try {
+            const data=await  Person.find({name:{$in:["Varad","Shivam"]}});
+       res.status(201).json(data);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({error:"Internal server Error"});
+    }
+
+})
+
+
+app.post("/save",async (req,res)=>{
+    try {
+            const data=req.body;
+    const newPerson=new Person(data);
+   const getPerson=await newPerson.save();
+       res.status(201).json(getPerson);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({error:"Internal server Error"});
+    }
+})
+
