@@ -1,6 +1,7 @@
 import express from "express";
-import Person from "./models/schme.js";
-import Menu from "./models/menuSchema.js";
+
+import PersonRoutes from "./routes/personRoutes.js"
+import menuRoutes from "./routes/menuRoutes.js"
 
 
 const app=express();
@@ -10,21 +11,11 @@ app.get("/",(req,res)=>{
     res.send("you got it! man");
 })
 
+app.use("/",PersonRoutes);
+app.use("/",menuRoutes);
 
 
 
-
-app.post("/savemenu",async (req,res)=>{
-    try {
-            const data=req.body;
-    const newMenu=new Menu(data);
-   const getMenu=await newMenu.save();
-       res.status(201).json(getMenu);
-    } catch (error) {
-        console.log(error);
-        res.status(500).send({error:"Internal server Error"});
-    }
-})
 
 
 

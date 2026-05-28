@@ -1,8 +1,8 @@
 import express from "express";
-import Person from "../models/schme";
+import Person from "../models/schme.js";
 const router=express.Router();
 
-app.get("/person/:worktype",async (req,res)=>{
+router.get("/person/:worktype",async (req,res)=>{
     try {
             const worktype=req.params.worktype;
             if (worktype=="manager"|| worktype=="owner" || worktype=="chef") {
@@ -18,7 +18,7 @@ app.get("/person/:worktype",async (req,res)=>{
 
 })
 
-app.get("/getme",async (req,res)=>{
+router.get("/getme",async (req,res)=>{
     try {
             const data=await  Person.find({name:{$in:["Varad","Shivam"]}});
        res.status(201).json(data);
@@ -30,7 +30,7 @@ app.get("/getme",async (req,res)=>{
 })
 
 
-app.post("/save",async (req,res)=>{
+router.post("/save",async (req,res)=>{
     try {
             const data=req.body;
     const newPerson=new Person(data);
@@ -42,3 +42,4 @@ app.post("/save",async (req,res)=>{
     }
 })
 
+export default router;
