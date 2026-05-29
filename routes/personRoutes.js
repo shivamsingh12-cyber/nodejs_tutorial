@@ -42,4 +42,25 @@ router.post("/save",async (req,res)=>{
     }
 })
 
+router.put("/:id",async (req,res)=>{
+    try {
+            const data=req.params.id;
+            const updateuser=req.body;
+   const getPerson=await Person.findByIdAndUpdate(data,updateuser,{
+    new: true,
+    runValidators:true
+   });
+
+   if (!getPerson) {
+    res.status(404).send({error:"Not found"});
+    console.log(getPerson);
+   }
+       res.status(201).json(getPerson);
+       
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({error:"Internal server Error"});
+    }
+})
+
 export default router;

@@ -4,7 +4,7 @@ const router = express.Router();
 
 
 
-app.post("/savemenu",async (req,res)=>{
+router.post("/savemenu",async (req,res)=>{
     try {
             const data=req.body;
     const newMenu=new Menu(data);
